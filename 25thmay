@@ -1,0 +1,73 @@
+TERRAFORM WORKFLOW : Write > Initialize > Plan > Apply
+Terraform init : it prepares the env to run the terraform commands. Downloads required providers(aws, azure, etc) and modules used in the terraform conf.
+                 also configures the backend for storing tf state and creates the lock file.
+                 We have to use it at the start of new project or time you addd, remove or upgrade providers/modules or change the backend settings in your conf.
+Terraform lock file : Everytime you run terraform init . Terraform creates or updates a file called .terraform.lock.hcl. in your working dir.
+                lock dependency versions for consistency across env.
+                Commit to version control and managed automatically by terraform.
+.terraform directory : to store the project providers and modules. .terraform/providers directory stores cached versions of the config providers.
+                       .terraform/modules directory stores downloaded versions of any referenced modules.
+
+Q1 . Should .terraform dir be in Version control ? 
+Ans: NO, add to your .gitignore file. Contains easily recreatable files. Can be large in size and contain platform specific files.
+
+Q2. Can u delete the .terraform dir ?
+Ans: Technically YES. Run terraform init to create it again. Useful for troubleshooting or cleaning up old dependencies.
+
+Terraform PLAN : generates execution plan showing the changes that terraform will make to the real-world.
+                  It gives u the ability to perform a dry-run.
+Saving a Plan : the exact actions in the saved plan will be executed, no surprise.
+                Save plan, have it reviewed, then apply later with confidence.
+                $terraform plan -out=myplan.tfplan or filename.tf or etc  (filename can be anything)
+Q3. How to apply a saved plan ? 
+Ans: $terraform apply myplan.tfplan
+-----------------------------------
+RESOURCE GRAPH:
+Terraform automatically builds a dependency graph from your conf to determine the order in which to create, update or destroy resources.
+- Resource order in your .tf files doesn't matter
+- Resource graph is how terraform achieves parallel execution.
+- Foundation for understanding resource dependencies.
+
+DEPENDENCIES : 
+Two type of dependencies : 
+Implicit dependencies(auto) : a reference to another resource that terraform already knows about.
+Explicit : Used when there's a dependencies that terraform can't automatically detect from resource references alone. Use "depends_on" for create an
+           explicit dependency.
+PARALLEL RESOURCE OPERATION : 
+-  Terraform processes the graph with parallel execution. processes nodes as soon as their dependencies are satisfied. Non-
+dependent resources are created/modified simultaneously.
+-  Default config: Terraform manages 10 operations in parallel but can be modified using the -parallelism flag
+                    $terraform apply -parallelism=5
+                    When to change parallelism : if u r running into API rate limiting issue or for debugging purposes.
+                    
+Terraform Apply : it make changes to your infra.
+                  Terraform apply runs a plan first to compare your exisiting infra to your desired state. By default, terr
+                  aform will prompt u to proceed with the proposed changes.
+          *STATE LOCKING :   terraform locks the state file during apply to prevent concurrent modifications.
+          *STATE UPDATES : State file is updated after each resource is successfully created/modified/destroyed.
+          *NO AUTOMATIC ROLLBACK : If a resrc fails during apply, terraform does not rollback previous successful changes.They 
+                                  remain in place.
+          *RESPECTS DEPENDENCIES : Commit to version control and managed automatically by terraform.
+
+
+            $terraform apply
+            $terraform apply myplan.tfplan
+            $terraform apply -auto-approve
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
