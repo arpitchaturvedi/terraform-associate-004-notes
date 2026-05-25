@@ -1,0 +1,10 @@
+Create terraform user for aws # aws configure, 
+for azure : #az login
+for github , go to developer settings > choose Personel Access Tokens > fine grained tokens > generate and set validation limit > copy and paste to terraform env
+variable. eg :export GITHUB_TOKEN = <value>
+
+3 . Terraform Foundations : 
+Resource Referencing : allows u to connect resources within your config , making it easy to share data b/w rsc and build dependencies.
+create more dynamic cofig : Terraform can use properties from one resource in another and avoid hardcoding values, creating a dynamic conf.
+Terraform automatically determines the order of resource creation based on references.
+Resource identifiers :
