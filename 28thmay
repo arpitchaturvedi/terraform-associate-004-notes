@@ -1,0 +1,27 @@
+TERRAFORM CLI 
+#terraform -install-autocomplete
+Restart terminal
+terraform s <tab>  ##it will suggest commands starting from 's'
+
+$terraform --help
+$terraform plan --help
+$terraform fmt  : format all tf files in the current directory. use -recursive to format files in sub-dir as well
+
+-------code-------------
+provider "random" {}
+
+variable "num_of_pets" {
+  type = number
+  description = "how many pets u want ?"
+}
+resource "random_pet" "name" {
+    length = var.num_of_pets
+}
+resource "random_pet" "bryans-pet" {
+    length = 3
+}
+output "random_pet_name" {
+    value = random_pet.name.id
+}
+
+add env variable : export TF_VAR_num_of_pets=6
