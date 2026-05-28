@@ -1,0 +1,158 @@
+TERRAFORM CLI 
+#terraform -install-autocomplete
+Restart terminal
+terraform s <tab>  ##it will suggest commands starting from 's'
+
+$terraform --help
+$terraform plan --help
+$terraform fmt  : format all tf files in the current directory. use -recursive to format files in sub-dir as well
+
+-------code-------------
+provider "random" {}
+
+variable "num_of_pets" {
+  type = number
+  description = "how many pets u want ?"
+}
+resource "random_pet" "name" {
+    length = var.num_of_pets
+}
+resource "random_pet" "bryans-pet" {
+    length = 3
+}
+output "random_pet_name" {
+    value = random_pet.name.id
+}
+
+add env variable : export TF_VAR_num_of_pets=6
+-------------------------------------------------
+
+TERRAFORM FILE STRUCTURE AND ORGANIZATION
+
+Create different files for different use case like variable.tf for variables storage, network.tf for n/w rsrc, dns.tf for dns, outputs.tf, firewall.tf,etc
+
+Terraform processes all files together
+
+Common Terraform files :
+
+1. main.tf : commonly used for primary infrastructure components.
+2.variables.tf : variables definitions used throughout your infra.
+3.output.tf : output blocks to output values to the terminal or to use for inputs to other modules.
+4.provider.tf : provider configurations and requirements
+5.terraform.tfvars : Define the values for your variables-usually ignored by .gitignore.
+
+ADDITIONAL FILES : 
+6.terraform.tfstate : the file that terraform uses to store state.
+7.terraform.tfstate.backup : backup of the previous state file before terraform writes anything new to the state file.
+8. .terraform.lock.hcl : used to track and select provider versions
+9. .gitignore : instructs git to ignore files included in this file.
+
+WORKING DIRECTORY : 
+terraform- > prod
+                main.tf
+                variables.tf
+                output.tf
+             test
+              dev
+                main.tf
+                variables.tf
+                output.tf
+
+TERRAFORM CONFIGURATION : FUNDAMENTALS
+  -  Terraform BLOCKS 
+        -  provider block : connect terraform to cloud platforms or services
+        -  resource block : the infra that tf creates, updates, or deletes.
+        -  data : retrieve information about existing resources to use in your config,
+        -  variable : make code reusable by defining values that can be customized for each run.
+        -  output : Display or share essential information about resources after deployment
+        -  terraform : define specific settings or resources in a config like req. terraform version
+        -  module : reusable config that grp related resources -make it easy to share configs.
+        -  import : pull in existing resources into terraform management.
+      there are many others too
+
+* PROVIDER BLOCK :
+  -  The name of the provider defined by the developer or maintainer
+  -  Arguments specific to the provider found in documentation
+  -  Authentication args should be provided via ENV variables instead due to security concerns.
+  -  While providers are stored in GitHub, the documentation can be found on the Terraform registry -> registry.terraform.io
+  -  When declared in your configuration, the provider is downloaded to the machine executing terraform.
+
+
+EXPLICITLY ASSIGN RESOURCES TO A SPECIFIC PROVIDER 
+provider "aws" {
+  alias = "dev"
+  region = "us-east-1"
+}
+provider "aws"{
+  alias = "prod"
+  region = "us-west-1"
+}
+resource "aws_s3_bucket" "dev_bucket" {
+  provider = aws.dev
+  bucket = "my-dev-bucket"
+}
+resource "aws_s3_bucket" "prod_bucket" {
+  provider = aws.prod
+  bucket = "my-prod-bucket"
+}
+
+*Most often used for multi-cloud or multi-account deployments
+*Use it when deploying resources across multiple cloud accounts or regions or managing various instances of the same provider.
+*Uses the provider = <provider_alias> syntax
+  
+
+RESOURCE BLOCK : 
+  -  The type of resource to be created defined within the provider
+  -  The resource name user provided string must be unique per config.
+  -  Arguments specific to the resource type can be found in provider documentation
+  -  A second resource block within the same terraform config file.
+resource "aws_instance" "web" {
+  ami   = ""
+  instance_type = ""
+  key_name =  "prod-web.key"
+  subnet_id = ""
+  tags = {
+    Name = "prod-web"
+  }
+}
+resource "aws_instance" "db" {
+  instance_type = "m5.4xlarge"
+  ami      = ""
+}
+
+RESOURCE REFERENCING : Dynamic pull info from one resource block to another, creating a connected config.
+Reference a resource block by using the resource type and the name of the resource.
+aws_lb.public_load_balancer
+fortios_firwall_policy.db
+aws_instance.web
+aws_db_instance.prd_db
+
+resource "github_repository" "prod_repo" {
+    name = "prod"
+    visibility = "private"
+}
+resource "github_branch" "default" {
+    repository = github_repository.prod_repo.name ##referencing to above repo name i.e prod_repo
+    branch   = "main"
+}
+resource "github_branch_default" "default" {
+    repository = github_repository.prod_repo.name      ##referencing to above repo name i.e prod_repo
+    branch = github_branch.default.branch              ##referencing to above branch name 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
