@@ -1,0 +1,39 @@
+Reading existing resources with Data sources
+---------------------------------------------
+
+DATA BLOCK : 
+Data blocks allow teraform to access info abt existing resources rather than creating new ones.
+
+Access Existing Infrastructure
+-------------------------------
+Retrieve the details of existing resources so they can be transferred in other terraform blocks.
+
+Dependency Resolution
+----------------------
+Data blocks help when one resource relies on the properties of another existing resource.
+
+Avoid Hardcoding Values
+-----------------------
+Data blocks prevents the need for hardcoded values by dynamically pulling in details, which makes configurations more adaptable.
+
+data "aws_vpc" "prd" {
+  filter {
+    name = "tag:Name"
+    values = ["prd-vpc"]
+  }
+}
+resource "aws_subnet" "pub" {
+  vpc_id = data.aws_vpc.prd.id
+  cidr_block = "10.0.0.1/24"
+}
+output "prd_vpc_subnet" {
+  value = data.aws_vpc.prd.cidr_block
+}
+
+Referencing data blocks : data blocks retrieve a wide range of info abt the specified resource -called attributes.
+Data block attributes are referenced just like resource attributes: data.<type>.<name>.<attribute>
+      data.aws_vpc.prd.arn
+      data.aws_vpc.prd.id
+      data.aws_vpc.prd.cidr_block
+      data.aws_vpc.prd.owner_id
+      
