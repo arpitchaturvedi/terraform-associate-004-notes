@@ -40,3 +40,10 @@ Data block attributes are referenced just like resource attributes: data.<type>.
 Parameterizing configurations with input variables
 ---------------------------------------------------
 The problem : hardcoding values in tf
+The solution : using VARIABLES in terraform
+use different variable files but same tf config file
+
+Variable block: 
+A variable block is used to define inputs that can be reused and customized, making your configurations more flexible and dynamic. Variables allow u to parameterize
+values instead of hardcoding them directly into resource blocks.
+This approach improves reusability, simplifies managing multiple env and helps maintain cleaner, more maintainable configurations.
