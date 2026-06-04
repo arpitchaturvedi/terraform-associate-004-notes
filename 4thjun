@@ -37,3 +37,6 @@ Data block attributes are referenced just like resource attributes: data.<type>.
       data.aws_vpc.prd.cidr_block
       data.aws_vpc.prd.owner_id
       
+Parameterizing configurations with input variables
+---------------------------------------------------
+The problem : hardcoding values in tf
