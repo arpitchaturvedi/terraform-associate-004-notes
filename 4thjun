@@ -47,3 +47,69 @@ Variable block:
 A variable block is used to define inputs that can be reused and customized, making your configurations more flexible and dynamic. Variables allow u to parameterize
 values instead of hardcoding them directly into resource blocks.
 This approach improves reusability, simplifies managing multiple env and helps maintain cleaner, more maintainable configurations.
+
+variable "vpshere-dc " {
+  description = "Name of datacenter"
+  type  = string
+  default = "prd-workload-dc"
+}
+variable "vsphere-networks" {
+  description = "list of networks"
+  type = list(string)
+
+  default = [
+      "VM Network"
+      "Management Network"
+  ]
+}
+
+TYPES OF VARIABLES : 
+Primitive variable types: 
+    ----string, number and bool
+
+Complex Variable Types:
+    ----List : A sequence of similar values. Presented by a pair of square brackets containing a comma-separated sequence of values.
+              list start at 0.
+              variable "permitted_size" {
+                type = list
+                default = ["t3.small", "t4g.micro"]
+              }
+  -----MAP : A group of values identified by named labels. series of key=value pairs.
+             variable "course_details" {
+                description = "course details"
+                type = map(string)
+                default = {
+                  instructor = "bryan"      //var.course_details.instructor
+                  course   = "terraform"    //var.course_details.course
+                }
+            }
+
+  -----SET : A collection of guranteed unique values. Terraform does not support accessing elements of a set using an index because sets are unordered collections.
+            note: Convert to a list to access.
+           variable "pub_subnet_ids" {
+              type = set(string)
+              default = ["subnet-12345", "subnet-7654"]
+           }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
