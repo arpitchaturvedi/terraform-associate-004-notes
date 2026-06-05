@@ -30,7 +30,9 @@ output "prd_vpc_subnet" {
   value = data.aws_vpc.prd.cidr_block
 }
 
-Referencing data blocks : data blocks retrieve a wide range of info abt the specified resource -called attributes.
+Referencing data blocks :
+------------------------
+data blocks retrieve a wide range of info abt the specified resource -called attributes.
 Data block attributes are referenced just like resource attributes: data.<type>.<name>.<attribute>
       data.aws_vpc.prd.arn
       data.aws_vpc.prd.id
@@ -64,6 +66,7 @@ variable "vsphere-networks" {
 }
 
 TYPES OF VARIABLES : 
+-------------------
 Primitive variable types: 
     ----string, number and bool
 
@@ -91,8 +94,9 @@ Complex Variable Types:
               default = ["subnet-12345", "subnet-7654"]
            }
 
-
-
+Referencing a Variable :  by using a name of the variable
+  var.vpshere_dc
+  var.vpshere_networks[0] //list
 
 
 
