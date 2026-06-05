@@ -40,3 +40,8 @@ output "instance_pubic_ip" {
 output "website_url" {
   value = "https://${aws_alb.web.dns_name}"
 }
+
+**
+  Outputs are stored in the Terraform state file and can be accessed without rerunning the configuration using the
+  "terraform output" command.
+  Output containing sensitive values can be marked as sensitive to hide them in the CLI.
