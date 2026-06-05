@@ -1,0 +1,42 @@
+Environment variables :
+----------------------
+
+Use an environment variable to set the values
+must start with TF_VAR_ followed by the variable name
+Useful for when you don't want to commit the value to a repo
+ex : export TF_VAR_vsphere_network="10.0.0.0/24"
+
+tfvars file :
+-------------
+Use a .tfvars file to set variable values
+Terraform automatically loads a .tfvars file if they exist
+Set values using a key=value format using the variable names
+A .tfvars file is usually excluded from version control (.gitignore)
+
+*Command line "-var" values override both default values and values in .tfvars files.
+*Use -var="key=value" to set the value for a specific variable.
+*Useful for quick, temporary changes or testing without modifying files.
+
+terraform plan -var="enable_logging=true"
+terraform apply -var="region=us-west-2" -var="vm_image-xffdf"
+
+Order of precedence
+--------------------
+command line flags
+*.auto.tfvars files
+*.tfvars files
+env variables
+variable block defaults
+
+Output Blocks
+-------------
+Display critical information
+Enable module integration: Output can pass data b/w terraform modules, simplifying workflows and making configs reusable
+Improve workflow efficiency: Outputs automate the retrieval of key values, reducing the need for manual lookups in provider consoles.
+output "instance_pubic_ip" {
+  description = "Public ip of server"
+  value = aws_instance.web.public_ip
+}
+output "website_url" {
+  value = "https://${aws_alb.web.dns_name}"
+}
