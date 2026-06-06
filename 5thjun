@@ -45,3 +45,54 @@ output "website_url" {
   Outputs are stored in the Terraform state file and can be accessed without rerunning the configuration using the
   "terraform output" command.
   Output containing sensitive values can be marked as sensitive to hide them in the CLI.
+
+TERRAFORM BLOCK  :
+it ensures your terraform setup is consistent, scalable across teams and environments.
+Version control  : specifies the required terraform and provider versions to avoid compatibility issues.
+Backend configuration : configures where teraform state is stored to ensure secure and reliable state mgmt
+Provider requirements : Defines the providers and the versions needed for your infra.
+
+terraform {
+  required_verison = "~> 1.10.0"   // ensures teraofmr v 1.10.x is used to run this config.
+  required_providers {
+    aws = {
+        source = "hashicorp/aws"
+        version = "5.87.0"   //specify a requrired provider and require v5.87.0
+    }
+  }
+  backend "s3" {         //where want to store state
+    bucket = "" 
+    key = ""
+    region = ""
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
