@@ -1,0 +1,15 @@
+What if you loose state file ?
+If we loose the state file then terraform doesn't know that any infra exists so it will create new resources again if we ran terraform apply.
+So we have to add IMPORT Block in our configuration file to map those existing infrastructure resources. Previously we use : 
+"$ terraform import aws_instance.web i-1234567890abcdef0" cli command.
+
+Understanding terraofrm drift : 
+When state file no longer matches real world configuration is called a Drift.
+when we run $terraform plan , it will show us something is changed. we have two choices: we can accept or revert.
+If we have to accept then we have to run the command : $terraform apply -refresh-only  
+i.e will change state file same as resources.
+Now we have to change our configuration files manually so that when we run again it should match the current state
+
+I've detected STATE DRIFT : how to fix it ?
+terraform plan -refresh-only
+terraform apply -refresh-only
