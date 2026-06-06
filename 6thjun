@@ -1,0 +1,61 @@
+TERRAFORM STATE 
+----------------
+terraform stores state in the current working directory in a JSON formatted file named terraform.tfstate.
+terraform needs to lock the state file while performing any action that might write to the file.
+terraform can be configured to store state in shared location. A backend config will determine where state is stored.
+
+Remote state configuration  : Backend configuration goes inside Terraform block, not a provider block.
+--------------------------    you must run "terraform init" after adding or changing backend configuration.
+
+S3 As Backend :
+-------------
+terraform {
+  backend "s3" {
+    bucket = "prod-terraform-state"
+    key = "prod/terraform.tfstate"
+    region = "us-east-1"  
+    use_lockfile = "true"     //enable state locking
+  }
+}
+-------------
+terraform {
+  backend "azurerm" {
+    tenant_id = ""
+    client_id = ""
+    storage_account_name = ""
+    container_name = ""
+    key = ""                                 //state locking is automatic in azure and gcp not in aws
+  }
+}
+
+STATE STORAGE BEST PRACTICES
+-----------------------------
+
+Q  : How to migrate state from local to remote state ?
+Ans: terraform init -migrate-state
+
+Why inspect terraform state ?
+to see what resources terraform is managing.
+check the current recorded state of a resource.
+troubleshoot why a plan shows unexpected changes.
+verify what terraform "thinks" exist.
+
+Inspecting state using the terraform CLI :
+------------------------------------------
+terraform state list     //list all resources in terraform state
+terraform state show  <resource>        //display state or plan details
+terraform state mv    -> now moved block   //move a resource 
+terraform state rm    -> now remove block   // remove a resource from state
+terraform state pull     // download state from current location
+terraform state push     //push state to the configured backend
+
+
+
+
+
+
+
+
+
+
+
