@@ -13,3 +13,39 @@ Now we have to change our configuration files manually so that when we run again
 I've detected STATE DRIFT : how to fix it ?
 terraform plan -refresh-only
 terraform apply -refresh-only
+-----------------------------
+
+MANAGING MULTIPLE ENVIRONMENTS 
+Creating multiple directories : this gives problem of code duplication
+dev account : mian.tf , provider.tf local file : terraform.tfstate
+qa account : main.tf , provider.tf terraform.tfstate
+            or 
+USE terraform WORKSPACEs  : a workspace is a named container for a separate instance of your terraform state.
+------------------------
+same code configuration across all env.
+each workspace maintains its own isolated state.
+no code duplication or manual syncing required.
+terraform automatically creates a workspace by the name "default" when you run "terraform init".
+
+When u create additional workspaces, terraform creates a terraform.tfstate.d/ directory.
+Each workspace get its own subdirectory with an isolated state file.
+The default workspace state remain in the root directory.
+
+Creating and Switching Workspaces : 
+------------------------------------
+terraform workspace 
+list - list all workspace
+new - create a new workspace
+select - change the selected namespace
+show - Display the current workspace
+delete  - delete the specified workspace
+
+CLI WORKSPACES and HCP TERRAFORM WORKSPACES
+
+
+
+
+
+
+
+
