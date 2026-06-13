@@ -18,3 +18,17 @@ ANS: When u need to combine variables and data sources to create dynamic values,
      it across multiple resources.
      Instead of embedding lengthy calculations or conditions directly in resources definitions, u can compute them in locals first & reference
      them where needed.
+
+Count Meta-Argument : specify a number of instances for a resource
+- Allows terraform to create multiple identical resources using a single block.
+- Assign an index(strts at 0) to reference each instance.
+- Use count to create resources that are identical but need to be repeated or when a variable controls the number of resources.
+- Reference the resources using : <type>.<name>[index]
+variable "vm_count" {
+   type = number
+   default = 3     //variable controlling the number of resources
+}
+resource "aws" "ec2_instance" {
+count = var.vm_count
+name = "vm-${count.index}"   //output : vm-0, vm-1 , vm-2
+}
