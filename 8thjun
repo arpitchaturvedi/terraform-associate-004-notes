@@ -1,0 +1,13 @@
+Using Locals to avoid code duplication
+---------------------------------------
+Locals/Local values : Named values that u can reference in other parts of your terraform code.
+* Most often referred to as "locals", think of locals like short-term memory for your terraform code.
+* They centralize and store values you use often, like names, env or shared tags.
+* Local values can be helpful to avoid repeating the same values or expressions multiple times in a config.
+
+locals {
+  app_name = "app"
+  environment = "dev"
+}
+call it with : local.app_name or local.environment
+benefits  : central point to make changes, clearer code , less risk of unwanted changes.
