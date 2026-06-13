@@ -11,3 +11,10 @@ locals {
 }
 call it with : local.app_name or local.environment
 benefits  : central point to make changes, clearer code , less risk of unwanted changes.
+
+Q : When should i use locals ?
+ANS: When u need to combine variables and data sources to create dynamic values, locals help keep ur code readable & consistent.
+     If the same value appears multiple times (like a prefix, environment name ,or common tag), define it once in locals instead of repeating
+     it across multiple resources.
+     Instead of embedding lengthy calculations or conditions directly in resources definitions, u can compute them in locals first & reference
+     them where needed.
