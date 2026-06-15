@@ -1,0 +1,88 @@
+for_each meta argument : 
+a more flexible way to manage multiple resources
+-pulls values from a MAP or SET rather than from a NUMBER.
+-rather than an index, resources gets a unique key as a reference, make it more stable than count
+-ideal for managing unique config : use it when resources need different names, tags, or settings
+
+REFACTORING TERRAFORM STATE: 
+Reorganising how terraform tracks your infrastructure without changing the infrastructure itself.
+
+Common scenarios : 
+-  you renamed a resource in your code
+-  you are reorganising modules
+-  you need to adopt existing infrastructure
+-  you want to stop managing something but keep it running
+without refactoring terraform thinks you are destroying the old resources & creating new ones
+
+The NEW way : 
+- Use configuration blocks : moved , removed , import
+- Declared your .tf files
+- Version controlled alongside your infrastructure
+- Reviewable in PRs
+- Part of the standard plan/apply workflow
+- can be tested before being applied
+
+
+MOVING RESOURCES WITH THE MOVED BLOCK : 
+When we try to rename the vpc or any other resource terraform will destroy it and create new one. Thats where we need moved block.
+
+Two parameters :
+-from : specify the orignal resource addr
+-to : specify the new resource addr
+
+State updates only : 
+-updates only the state file- no infra changes are made
+
+Resource blocks must exist : 
+-You must write the new resource blocks before refactoring resource addr.
+moved {
+  from = aws_instance.server
+  to = aws_instance.web_server
+}
+moved {
+  from = aws_s3_bucket.data
+  to  = module.storage.aws_s3_bucket.data
+}
+
+The refactoring workflow : 
+write: add new resource blocks to terraform config.
+write : add new moved blocks to terraform config.
+plan : terraform plan
+apply : terraform apply
+delete : delete moved blocks    //not needed after refactor
+
+REMOVING RESOURCES WITH THE REMOVED BLOCK :
+REMOVED block instructs terraform to remove a resource from state.
+
+Lifecycle argument: destroy = false
+by default, terraform removes the resource from state and destroys the actual resource.
+
+State removal only : 
+Removes from state file - infrastructure remains untouched
+you must also remove the resource block from your config.
+
+removed {
+ from = google_sql_database_instance.prd_db_1
+ lifecycle {
+   destroy = false
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
