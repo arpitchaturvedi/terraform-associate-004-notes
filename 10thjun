@@ -1,0 +1,22 @@
+TERRAFORM MODULES : 
+A module is a container for related resources that are used together. They are the primary way to package & reuse configurations.
+
+Parent & child module :
+A parent (calling) module references and configures other modules, while a child module is the reusable infrastructure component being called.
+Modules can be retrieved from a registry, a repo or stored locally
+
+MODULE VERSIONING:
+module "prod-vpc" {
+  source = path
+  version = "5.12.0"     //terraform init -upgrade
+
+  name = var.vpc_name
+  cidr = var.vpc_cidr_block
+
+  azs = ["us-west-2a", "us-west-2b"]
+  private_subnets = ["10.0.1.0/24"]
+  public_subnets = ["10.0.2.0/24"]
+
+  enable_nat_gateway = true
+  single_nat_gateway = true
+}
