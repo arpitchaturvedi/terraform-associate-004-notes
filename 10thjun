@@ -20,3 +20,6 @@ module "prod-vpc" {
   enable_nat_gateway = true
   single_nat_gateway = true
 }
+
+By default, the root module doesnot have access to data/variables in the child module
+After adding module to config file, run terraform init.
