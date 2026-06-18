@@ -9,8 +9,15 @@ lifecycle meta-argument : controlling how terraform manages resources
 -Customise how terraform manage resources
 -You can protect resources or avoid changes
 -uses lifecycle block inside of your resource : options include prevent_destroy, create_before_destroy and ignore_changes
+-replace_triggered_by : Force resource replacement when specified resources or attributes change. Useful for dependencies that don't trigger automatic replacement.
 
   lifecycle {
     ignore_changes = [vm_size]
   }
-  
+  -----
+  lifecycle {
+    create_before_destroy = true
+  }
+lifecycle {
+    replace_triggered_by = [aws_security_group.web]
+  }
