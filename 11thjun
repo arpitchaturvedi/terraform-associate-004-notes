@@ -1,0 +1,16 @@
+CONTROLLING RESOURCE ORDER WITH EXPLICIT DEPENDENCIES : 
+
+depends-on Meta-arguments: ensures resources are created in the right order.
+Explicitly define dependencies: terraform may not automatically know about dependencies needed for your deployment.
+Ensure correct provisioning order
+depends_on = [aws_db_instance.db]
+
+lifecycle meta-argument : controlling how terraform manages resources
+-Customise how terraform manage resources
+-You can protect resources or avoid changes
+-uses lifecycle block inside of your resource : options include prevent_destroy, create_before_destroy and ignore_changes
+
+  lifecycle {
+    ignore_changes = [vm_size]
+  }
+  
