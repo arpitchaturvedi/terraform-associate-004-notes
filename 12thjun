@@ -1,0 +1,26 @@
+Validating terraform configuration : 
+Terraform has 4 type of validations, each serving different purposes.
+1. variable validations
+2. preconditions
+3. postconditions
+4. checks : validate your infra outside of the typical resource lifecycle.
+          - validate resources, data sources, variables, or outputs in your configuration.
+          - Validate the behaviour of your infrastructure as a whole.
+          - Verify infrastructure configuration without blocking operations.
+          - The check block executes as the last step of plan or apply operations, after terraform has planned or provisioned your infrastructure.
+          - When the check blocks assertion fails, terraform reports a warning and continues executing the current operation.
+
+Protecting secrets in your configuration : 
+* Hide values in outputs and logs
+* Keep secrets out of version control
+* Don't store secrets in terraform at all
+
+Solution: Mark variable as SENSITIVE
+What sensitive variables protect ?
+Ans : Hides values in terraform plan output
+      Hides values in terraform apply output
+      Prevents values from appearing in logs
+      Redacts values in error messages
+      Works for variables and outputs
+
+What it doesn't protect ?
