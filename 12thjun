@@ -24,3 +24,30 @@ Ans : Hides values in terraform plan output
       Works for variables and outputs
 
 What it doesn't protect ?
+Ans : Still stored in statefile in plane text
+      Still visible if you open state directly
+      Still transmitted to providers
+      Not encryption - just output masking
+
+SENSITIVE OUTPUTS : Sensitive outputs are hidden. Still accessible programatically or via terraoform output <name> command.
+
+TO keep secrets out we have to use ENVIRONMENT VARIABLES:
+export TF_VAR_db_password="fdfrddfd"
+export TF_VAR_api_key=""
+Then run terraform apply it will read env variables values.
+ENV VAR does stop secrets to go to version control system but not to go into state file.
+
+ENVIRONEMNT VARIABLES IN GITHUB ACTIONS :
+-env : 
+   TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+    TF_VAR_api_key: ${{ secrets.API_KEY }}
+Secrets stored in Github secrets
+Injected as env vars at runtime
+Never appears in logs or code
+
+
+
+
+
+
+
