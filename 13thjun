@@ -1,0 +1,63 @@
+Securing state file :
+1. always use remote state for production
+2. Enable encryption at rest
+3. Implement access controls.
+4. Enable state locking
+
+Ephemeral values : Secrets that don't persist
+Terraform 1.10+ require to use ephemeral = true
+
+variable "exmaple" {
+  description = "password of the database"
+  type = string
+  sensitive = true
+  ephemeral = true
+}
+
+EPHEMERAL VALUES CAN BE USED :
+Local values , provider blocks, ephemeral resources, ephemeral variables, 
+ephemeral outputs, provisioner blocks, write-only arguments
+
+USE CASE OF EPHEMERAL VALUES : 
+
+variable "github token" {
+  type = string
+  description = ""
+  sensitive = true
+  ephemeral = true
+}
+provider "github" {
+  owner = var.github_owner
+  token = var.github_token
+}
+
+EPHEMERAL RESOURCES : New block type (not data or resource )
+Fetches data at runtime and stored in memory
+Never persisted in state and flushed when terraform operations are completed.
+Opened and closed during execution
+Use "ephemeral" keyword instead of "data"
+Syntax is identical
+
+When to use  :
+- Fetching secrets from vault
+- Reading temporary credentials
+- Retrieving dynamic tokens
+
+Write-Only Arguments : lets u securely pass temporary values to terraform's managed resources during an operation without persisting those values to state or plan files.
+resource "" "" {
+  instance_class = ""
+  allocated_storage = ""
+  engine = ""
+  password_wo = "old pass"
+  password_wo_version = 1
+  
+}
+
+
+
+
+
+
+
+
+
