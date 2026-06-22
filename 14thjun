@@ -10,3 +10,17 @@ ephemeral "vault_aws_acess_Credentials" "creds" {
   type = "creds"
   region = "us-east-1"
 }
+provider "aws"{
+  region = "us-east-1"
+  access_key = ephemeral.vault_aws_acess_Credentials.creds.access_key
+  secret_key = ephemeral.vault_aws_acess_Credentials.creds.secret_key
+}
+resource "aws_instance" "main" {
+  # provision with temp credentials
+}
+
+features : 
+- credentials generated when requested 
+- valid for 120 seconds
+- automatically revoked after TTL.
+- creds not written to state when using ephemeral resources.
