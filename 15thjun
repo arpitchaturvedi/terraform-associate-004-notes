@@ -1,0 +1,19 @@
+Debugging Terraform Issues:
+
+Investigating unexpected terraform behaviour
+Preparing bug reports for hashicorp team
+Understanding what exactly terraform is doing under the hood.
+
+TF_LOG Env Variable:
+Setting TF_LOG enables detailed monitoring
+export TF_LOG=TRACE
+$terraform plan
+
+Separate Core and provider logging:
+TF_LOG_CORE=TRACE
+TF_LOG_PROVIDER=TRACE
+
+Saving logs to a file : 
+Persist logs using the TF_LOG_PATH env
+export TF_LOG-TRACE
+export TF_LOG_PATH=terraform.log
