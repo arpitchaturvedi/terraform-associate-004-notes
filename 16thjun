@@ -1,0 +1,20 @@
+HCP TERRAFORM OVERVIEW
+HCP Terraform : collaborate , manage remote state and automate workflows
+Comparing terraform with HCP Terraform :
+Terraform community :   
+  -  Define your infra as code
+  -  Free and "code-available"
+  -  Rich set of integrations (providers)
+  -  Reusable modules (public registry)
+  -  Ability to plan out your changes
+  -  Local execution and control
+
+HCP Terraform adds : 
+  -  Managed remote state storage
+  -  Consistent execution env
+  -  Built-in team collaboration
+  -  Role-based access control RBAC
+  -  Policy enforcement Sentinal/OPA
+  -  Cost estimation before apply
+  -  Audit logs and compliance
+  -  Private module registry
