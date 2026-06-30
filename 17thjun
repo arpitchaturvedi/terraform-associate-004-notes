@@ -1,0 +1,29 @@
+HCP Terraform teams and permissions
+
+Access control hierarchy : 
+Users : Can belong to multiple teams
+Teams : Granted persmission at the org, project and workspace levels.
+Permissions : Additive model : the highest permission always wins. Follow the principle of least privileges.
+
+Team visibility : Visible and Secret
+Team tokens : has the same level of access to the workspace as the team.
+
+Organisational level : Broad permissions like manage all workspaces, manage policies, manage vcs settings, view all workspaces.
+project level : Permissions scoped to a project and all workspaces within it ( Read, write, maintain and custom )
+Workspace level : Permissions on a specific workspace such as admin , read, write, plan or custom.
+
+PRIVATE REGISTRY : 
+-----------------
+using private modules using src address : app.terraform.io/<organisation-name>/terraform/<name>/<provider>
+module "webapp" {
+  source = app.terraform.io/////
+  name = var.name
+  prefix = var.prefix
+  version = "1.0.0"
+}
+
+KEY TAKEAWAYS : 
+  -  The private registry lets you share modules/providers privately within the org.
+  -  u can also curate approved modules/providers alongside ur private ones.
+  -  private modules are published from VCS repos and versioned with git TAGS .
+  -  The source format includes Hostname : app.terraform.io/<organisation-name>/terraform/<name>/<provider>
