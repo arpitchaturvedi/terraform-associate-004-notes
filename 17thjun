@@ -27,3 +27,31 @@ KEY TAKEAWAYS :
   -  u can also curate approved modules/providers alongside ur private ones.
   -  private modules are published from VCS repos and versioned with git TAGS .
   -  The source format includes Hostname : app.terraform.io/<organisation-name>/terraform/<name>/<provider>
+
+Policy as Code : 
+--------------
+Codified rules : Securit, compliance and operational requirements written as code.
+Version controlled : Stored in VCS , reviewed through pull requests just like infra code.
+Automatically enforced  : Evaluated on every run, no manual review required.
+
+Policy checks : 
+-------------
+  - Policy evaluate the plan data before any infra is created.
+  - Failed policies can block the apply entirely.
+  - Sentinel policy checks also have access to cost estimation data
+  - If the plan itself fails, policies are never evaluated.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
