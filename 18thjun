@@ -1,0 +1,23 @@
+Additional HCP terraform features : 
+
+Health assessments : 
+------------------
+Terraform can automatically run health assessments on your workspaces once every 24hrs or so.
+Checks for Drift detection.
+
+Workspaces often depends on each other
+
+Run triggers : 
+
+HCP Terraform  > networking workspace >managed infra   
+                    plan-> apply
+                         |
+                      Run Triggers
+                      Queue a run
+                      Firewall workspace
+
+
+Benefits of run triggers :
+- Run triggers let u connect a workspace to one or more source workspaces.
+- HCP terraform automatically queues a run in the connected downstream workspace.
+- 
