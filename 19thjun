@@ -38,6 +38,67 @@ The first provider block without an alias becomes the default configuration, and
 Resources then reference a non-default provider using the provider meta-argument with the syntax provider = <PROVIDER>.<ALIAS>. Without the alias, Terraform cannot resolve 
 the aws.europe reference and will throw an error during planning.
 
+19. A colleague is debugging a suspected issue with Terraform's state locking mechanism. What logging configuration do you recommend to capture only the required logs?
+State locking is a Terraform core feature, not a provider feature. The locking mechanism, state management, and related internal logic are all part of Terraform itself, 
+not the cloud provider plugins. Therefore, TF_LOG_CORE=TRACE gives you detailed logs of exactly what you need — Terraform's internal operations around state — without the 
+extra noise from provider operations.
+
+20.When should you use the depends_on meta-argument instead of relying on Terraform's implicit dependency detection? (select two)
+Terraform automatically detects dependencies when one resource references another's attributes (implicit dependencies), but some dependencies exist outside this detection mechanism. 
+The depends_on meta-argument handles two specific scenarios: when a resource must be fully operational before another resource starts but there's no attribute reference between them,
+and when dependencies exist outside Terraform's resource graph entirely (such as external 
+services or runtime behaviors). Overusing depends_on can reduce Terraform's ability to parallelize operations, so it should only be used when implicit dependencies are insufficient.
+
+21.Your variable is defined as type = list(string) and you want to use for_each to create one kubernetes_namespace per entry. Which configuration correctly handles the type conversion 
+required by for_each?
+The for_each meta-argument accepts either a map or a set, not a list. When your variable is defined as list(string), you must convert it using toset() before passing it to 
+for_each. The toset() function converts the list into a set of unique strings, which for_each can iterate over. With a set, both each.key and each.value will be the string itself.
+Passing a list directly to for_each will produce an error.
+
+22. You need to pass a sensitive database password to a variable named db_password in a CI/CD pipeline without storing the value in any files within the repository. 
+Which approach is the most secure and appropriate?
+Set an env variable named TF_VAR_db_password in the CI/CD pipelines secret mgmt configuration.
+
+23.You have an EC2 instance where tags are frequently modified outside of Terraform by automated compliance tools. Which lifecycle configuration prevents Terraform from reverting these external tag changes?
+lifecycle {ignore_changes = [tags]}
+
+24.You rename a resource from aws_instance.app to aws_instance.web_app in your configuration but forget to add a moved block. What will happen when you run terraform apply?
+When you rename a resource in your Terraform configuration without using a moved block, Terraform treats this as two separate operations: removing the old resource and adding a
+new resource. Terraform compares your configuration against the state file and sees that aws_instance.app no longer exists in your code (plans to destroy it) and
+aws_instance.web_app is a new resource (plans to create it). This results in your infrastructure being destroyed and recreated, causing downtime and potential data loss.
+
+25. You want HCP Terraform to automatically detect when someone manually modifies a resource outside of Terraform. Which feature should you enable?
+HCP Terraform health assessments automatically monitor your managed infrastructure and detect when real-world resources no longer match your Terraform configuration.
+Once enabled, health assessments run approximately every 24 hours and include two types of evaluations: drift detection (compares actual infrastructure against the state file) 
+and continuous validation (checks whether custom conditions like check blocks, preconditions, and postconditions still pass). Health assessments are available in HCP 
+Terraform Standard and Premium editions.
+
+26. How should you reference the connection_string output from a child module named database in the root module?
+module.database.connection_string
+To access output values from a child module, you use the syntax module.MODULE_NAME.OUTPUT_NAME. You cannot directly reference resources defined inside a module from outside
+that module — the module boundary enforces encapsulation, and outputs are the interface for exposing data. Note that even though the output is marked as sensitive = true, 
+you can still reference it in your configuration — Terraform will just redact it from logs and plan output.
+
+27. Your organization requires that all infrastructure changes be reviewed before deployment and that the exact same reviewed changes are applied later without drift. Which commands would you use?
+terraform plan -out=infra.tfplan then terraform apply infra.tfplan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
