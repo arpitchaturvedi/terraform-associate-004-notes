@@ -20,4 +20,6 @@ HCP Terraform  > networking workspace >managed infra
 Benefits of run triggers :
 - Run triggers let u connect a workspace to one or more source workspaces.
 - HCP terraform automatically queues a run in the connected downstream workspace.
-- 
+- Each workspace can connect to up to 20 source workspaces.
+- Run triggers fires on successful applies in source workspaces and that they enable workspace-to-workspace automation.
+
