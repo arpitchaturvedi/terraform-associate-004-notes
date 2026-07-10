@@ -1,0 +1,60 @@
+Terraform answer explanations :
+
+
+10. A teammate asks why you chose type = map(object({...})) instead of separate string variables for a structured environment configuration. What is the most accurate explanation?
+Terraform's type system includes both primitive types (string, number, bool) and complex types, which are further divided into collection types (list, map, set) and structural types (object, tuple). Complex types allow you to define variables that hold multiple related values in a single, organized structure. Structural types like object also provide built-in validation — Terraform will check that every required attribute is present and matches the declared type during the planning phase, catching configuration errors early.
+
+11. Security has mandated that credentials must not be stored locally, should automatically expire, and must never appear in state files. Which approach meets all these requirements?
+integrate with hashicorp vault and use ephemeral resources in terraform.
+
+12.True or False? The immutable infrastructure pattern, where servers are replaced rather than modified in place, eliminates configuration drift because resources are never changed after initial provisioning.
+Immutable infrastructure treats servers and infrastructure as disposable resources that are never modified after deployment. Updates involve replacing the entire resource with a new version rather than patching or reconfiguring the existing one. Because resources are never changed after creation, there is no opportunity for configuration drift to accumulate over time. This pattern also simplifies rollback procedures. Terraform supports this pattern naturally through its declarative approach and resource replacement lifecycle.
+
+13.Two engineers run terraform apply at the same time against the same workspace that uses an S3 backend with state locking. What are the correct outcomes? (select two)
+State locking prevents concurrent modifications that could corrupt the state file. When a backend supports locking (such as S3 with a lockfile), the first operation acquires the lock and the second operation receives an error until the lock is released. If a backend does not support locking, or if locking is explicitly disabled with -lock=false, multiple concurrent operations can write to the state file simultaneously and potentially corrupt it. Terraform never automatically merges concurrent state changes, and locking applies to all state-modifying operations including plan, apply, and destroy.
+
+14.When applying a new configuration, you encounter an error and no logging is configured. How can you enable the most verbose level of Terraform logging to help you troubleshoot?
+Set TF_LOG env variable to TRACE
+
+15.Which of the following actions does terraform init perform? (select three)
+1. Configures the backend for storing Terraform state based on your backend configuration
+2. Creates or updates the .terraform.lock.hcl file to record provider versions being used.
+3. Downloads and installs provider plugins specified in your configuration into the .terraform directory.
+
+16.Your organization runs applications across AWS, Azure, and GCP and wants to standardize their infrastructure deployment process. Which Terraform capability best addresses this requirement?
+Multi-cloud deployment is a core Terraform use case. Terraform lets you use the same workflow (Write, Plan, Apply) to manage multiple providers and handle cross-cloud dependencies, simplifying management and orchestration for large-scale, multi-cloud infrastructures.
+
+17.Select all the true statements about using the moved block. (select three
+The moved block is designed for refactoring resource addresses within a single Terraform state file. 
+It can handle renaming individual resources, moving resources into or out of modules, and even renaming entire modules. 
+Before creating a moved block, you must write the new resource block with the destination address. Once you've applied the changes, 
+the moved block becomes unnecessary temporary scaffolding and should be deleted. The critical limitation is that moved blocks only work within the same state file — 
+if you need to transfer resources between different state files, you must use removed blocks in the source and import blocks in the destination configuration.
+
+18.A colleague has two provider "aws" blocks (one for us-east-1, one for eu-west-1) and is getting an error. The DynamoDB resource references provider = aws.europe. 
+Which change will fix the configuration?
+Terraform allows you to define multiple configurations of the same provider by using the "alias" meta-argument on additional provider blocks. 
+The first provider block without an alias becomes the default configuration, and any additional configurations must include alias so Terraform can distinguish between them.
+Resources then reference a non-default provider using the provider meta-argument with the syntax provider = <PROVIDER>.<ALIAS>. Without the alias, Terraform cannot resolve 
+the aws.europe reference and will throw an error during planning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
