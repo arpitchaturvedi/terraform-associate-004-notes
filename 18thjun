@@ -23,3 +23,29 @@ Benefits of run triggers :
 - Each workspace can connect to up to 20 source workspaces.
 - Run triggers fires on successful applies in source workspaces and that they enable workspace-to-workspace automation.
 
+Tracking Work  :
+----------------
+- As your org scales, you will have hundreds of workspaces.
+- Some might need updates, version, upgrades and fixes.
+- you need the ability to add to-do items you can attach to workspaces.
+
+TRACKING WORK WITH CHANGE REQUESTS(basically notes or tickets) : 
+- Change requests are actionable "todo" items u can attach to workspaces.
+- u add the messages directly from the explorer and they get tracked for each workspace.
+- Teams can be notified when new change requests are created on their workspaces.
+- Available in standard and premium editions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
