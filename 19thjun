@@ -127,21 +127,81 @@ cloud provider exactly as it was, but Terraform no longer tracks or manages it. 
 The other team can then use an import block to bring the existing database under their Terraform management. If destroy were set to true (or omitted, since true is the default),
 Terraform would destroy the database when removing it from state.
 
-36.
+36.True or False? You can use a GitHub repository as a module source by specifying a URL like source = "github.com/hashicorp/example".
+  TRUE
 
+37. Your platform team has built several reusable Terraform modules. You want to share them with your organization while keeping the source code private and making them
+discoverable from the HCP Terraform UI. Which feature should you use?
+The HCP terraform private registry
 
+38. Your team wants to refactor a monolithic Terraform configuration with 50+ resources in a single main.tf file into modules. What is the primary benefit?
+The configuration becomes for organized , reusable and easier to maintain
 
+39. You are running terraform apply and midway through provisioning 10 resources, your network connection drops and the command fails. When connectivity is restored, 
+what will terraform plan show?
+Only the resources that failed or were not yet attempted will show as needing to be created.
 
+40. A colleague is confused because a sensitive output value still appears when they run terraform output db_connection_string directly even though sensitive = true is set.
+What should you explain? Setting sensitive = true on an output encrypts the value in the state file using AES-256 encryption, but the terraform output command decrypts it automatically
+The sensitive argument on output blocks controls display redaction, not access control. When set to true, Terraform replaces the value with (sensitive value) in plan and apply
+CLI output. However, the terraform output command is explicitly designed to retrieve output values, so it displays the value even when marked sensitive. Importantly,
+sensitive = true does not encrypt the value in the state file — sensitive values are stored in plaintext in state, which is why securing the state file itself remains critical.
 
+41. You manage 15 workspaces that all deploy to the same AWS account. What steps should you take to simplify credential management when they rotate? (select two)
+HCP Terraform projects let you organize related workspaces into logical groups, and variable sets let you define reusable collections of variables that can be applied at
+different scopes. By grouping your workspaces into a project and then creating a project-scoped variable set containing your AWS credentials, every workspace in that project
+automatically inherits those values. When credentials need to rotate, you update them in one place — the variable set — and the change propagates to all workspaces in the project.
 
+42. How does Terraform's resource graph affect infrastructure operations? (select three)
+Terraform builds a dependency graph to determine execution order by analyzing references between resources, creating implicit dependencies automatically. Non-dependent resources
+are processed in parallel, with a default limit of 10 concurrent operations, significantly speeding up infrastructure deployment. When implicit dependencies aren't sufficient,
+you can use the depends_on argument to explicitly define dependencies. The graph is built in memory during plan and apply operations based on your current configuration — not
+on file order — and it is not saved to disk.
 
+43. What type of workflows are available when using HCP Terraform to manage Terraform runs? (select three)
+CLI driven
+API driven
+VCS driven
 
+44. A developer wants to understand how Terraform core, providers, and the AWS API relate. Which statement accurately describes this relationship?
+Providers are plugins that enable Terraform to work with virtually any platform or service with an accessible API. The AWS provider enables Terraform to create and manage
+AWS resources via the AWS API.
 
+45. A Kubernetes deployment managed by Terraform needs to be recreated because of a critical security patch, but no configuration attributes have changed. You want to force
+replacement of only that deployment without affecting other resources. Which command accomplishes this?
+The -replace flag on terraform apply tells Terraform to force the destruction and recreation of a specific resource, even when no configuration changes would normally 
+trigger replacement. The -target flag limits the scope of an operation but does not force replacement. Using a separate destroy and apply introduces unnecessary risk and
+downtime compared to the single atomic -replace operation.
 
+46. You need to replace an EC2 instance whenever its associated security group changes, but you want to ensure the new instance is fully running before the old one is destroyed. 
+Which lifecycle configuration accomplishes this? (select two)
+replace_triggered_by = [aws_security_group.example]
+create_before_destroy = true
 
+47. What is the primary purpose of the .terraform.lock.hcl file in a Terraform project?
+It locks provider versions and their checksums to ensure consistent installations across environments.
 
+48. Your configuration uses a registry module with version = "~> 2.0" and your lock file contains version 2.3.0. A new version 2.5.0 is published. What happens when a team member
+runs terraform init?
+Terraform continues using version 2.3.0 from the lock file.
+The dependency lock file (.terraform.lock.hcl) ensures consistent module and provider versions across team members and environments. When the lock file exists and contains
+a specific version, Terraform will continue using that locked version even if newer versions are available that match the version constraint. To upgrade to 2.5.0, someone 
+must explicitly run terraform init -upgrade, which updates the lock file to the newest version matching the constraint. Then, when other team members pull the updated lock 
+file and run terraform init, they'll all get version 2.5.0.
 
+49. Your networking workspace deploys subnets that your firewall workspace depends on. When new subnets are added, the firewall workspace needs to automatically update
+its rules. What should you configure?
+A run trigger on the firewall workspace with the networking workspace as the source.
 
+50. During the Terraform workflow, when does Terraform show you what changes will be made before actually modifying your infrastructure?
+The Plan stage is specifically designed for this purpose. Terraform generates an execution plan describing the infrastructure it will create, update, or destroy based
+on existing infrastructure and your configuration. It then prompts you for approval before the Apply stage modifies anything. This preview capability is a key feature
+for safely managing infrastructure changes.
+
+51. What is the correct syntax for sourcing a module from the Terraform Registry?
+The correct syntax for sourcing a module from the Terraform Registry is source = "NAMESPACE/NAME/PROVIDER". Terraform automatically knows to look in the public
+Terraform Registry when you use this three-part naming convention. You don't need to include the full registry URL — that's implied by the shorthand syntax. 
+The namespace comes first (the organization or user who published the module), then the module name, then the provider.
 
 
 
