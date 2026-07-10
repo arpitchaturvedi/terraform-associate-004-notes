@@ -82,11 +82,52 @@ you can still reference it in your configuration — Terraform will just redact 
 27. Your organization requires that all infrastructure changes be reviewed before deployment and that the exact same reviewed changes are applied later without drift. Which commands would you use?
 terraform plan -out=infra.tfplan then terraform apply infra.tfplan
 
+28. Your Terraform configuration includes variable validation, a precondition on a resource, a postcondition on the same resource, and a check block. In what order does 
+Terraform evaluate these validations during a terraform apply?
+Variable validation > precondition > postcondition > check
+Terraform evaluates validations at specific points in its workflow. Variable validation runs first during the planning phase, before Terraform even contacts providers. 
+Precondition blocks evaluate after the plan is generated but before resources are created. Postcondition blocks run after Terraform creates or updates resources. 
+Finally, check blocks execute as the last step after all other operations complete, providing monitoring without blocking deployment. This layered approach creates defensive
+validation at each stage of infrastructure provisioning.
 
+29. A colleague suggests using var.bucket_name inside the backend block to make it dynamic. Will this work?
+No, the backend block only accepts literal values because the backend must be initialized before terraform can evaluate variables or expressions.
 
+30. Your project uses version 5.60.0 of the hashicorp/aws provider, locked in the .terraform.lock.hcl file. A new version 5.65.0 has been released that you need.
+Your version constraint is ~> 5.0. What must you run to upgrade?
+terraform init -upgrade 
+The dependency lock file (.terraform.lock.hcl) pins the exact provider versions resolved during the last terraform init. Running terraform init without flags respects the 
+lock file and continues using the pinned version, even if newer compatible versions exist. The -upgrade flag tells Terraform to ignore the lock file selections, check for the 
+newest versions that satisfy your version constraints, download them, and update the lock file accordingly. Deleting the lock file manually is not recommended because it 
+removes the checksum verification that protects against supply chain attacks.
 
+31. Your organization has a shared VPC that was created manually in the AWS console six months ago. You now want to manage this VPC with Terraform without recreating it. 
+What's the correct approach?
+The "import" block is specifically designed for bringing existing infrastructure that was created outside of Terraform under Terraform management. The workflow starts by 
+writing a resource block in your Terraform configuration that matches the existing infrastructure, then adding an import block that maps your resource address to the actual
+resource ID in your cloud provider. When you run terraform plan, Terraform associates your resource definition with the existing infrastructure and shows any configuration 
+differences. After running terraform apply, the resource is fully managed by Terraform without having been destroyed or recreated.
 
+32. True or False? When you run terraform apply without specifying a saved plan file, Terraform automatically runs a plan first and prompts for approval before making any 
+infrastructure changes.
+TRUE
 
+33. You're setting up a CI/CD pipeline to automatically deploy infrastructure changes. Which command should you use to apply changes without requiring manual approval?
+terraform apply -auto-approve
+
+34. When an HCP Terraform workspace is set to remote execution mode, where does terraform plan execute?
+HCP Terraform supports two primary execution modes: remote and local. In remote execution mode (the default), Terraform runs — including plan and apply — execute on HCP 
+Terraform's own managed, disposable virtual machines. Your local CLI streams the output back to your terminal, but the actual work happens remotely. This enables features
+like Sentinel policy enforcement, cost estimation, and run notifications that depend on remote execution.
+
+35. A production database managed by Terraform needs to be handed off to another team's Terraform configuration. What happens when you use a removed block with
+lifecycle { destroy = false }?
+The removed block with destroy = false removes a resource from Terraform's state file without touching the actual infrastructure. The database continues to run in your 
+cloud provider exactly as it was, but Terraform no longer tracks or manages it. This is the correct approach when handing off resources between teams or configurations.
+The other team can then use an import block to bring the existing database under their Terraform management. If destroy were set to true (or omitted, since true is the default),
+Terraform would destroy the database when removing it from state.
+
+36.
 
 
 
