@@ -17,8 +17,8 @@ terraform apply -refresh-only
 
 MANAGING MULTIPLE ENVIRONMENTS 
 Creating multiple directories : this gives problem of code duplication
-dev account : mian.tf , provider.tf local file : terraform.tfstate
-qa account : main.tf , provider.tf terraform.tfstate
+DEV account : main.tf , provider.tf local file : terraform.tfstate
+QA account : main.tf , provider.tf terraform.tfstate
             or 
 USE terraform WORKSPACEs  : a workspace is a named container for a separate instance of your terraform state.
 ------------------------
