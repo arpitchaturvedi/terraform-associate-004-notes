@@ -14,10 +14,10 @@ benefits  : central point to make changes, clearer code , less risk of unwanted 
 
 Q : When should i use locals ?
 ANS: When u need to combine variables and data sources to create dynamic values, locals help keep ur code readable & consistent.
-     If the same value appears multiple times (like a prefix, environment name ,or common tag), define it once in locals instead of repeating
-     it across multiple resources.
-     Instead of embedding lengthy calculations or conditions directly in resources definitions, u can compute them in locals first & reference
-     them where needed.
+     If the same value appears multiple times (like a prefix, environment name ,or common tag), define it once in locals instead of
+     repeating it across multiple resources.
+     Instead of embedding lengthy calculations or conditions directly in resources definitions, u can compute them in locals first &
+     reference them where needed.
 
 Count Meta-Argument : specify a number of instances for a resource
 - Allows terraform to create multiple identical resources using a single block.
