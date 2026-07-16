@@ -31,22 +31,30 @@ Project : Organizes related workspace together. Lets you scope team permissions.
           workspaces. Every workspace must belong to exactly one project.
           every org gets one default project, can rename it but not delete it. 
           grant a team access to an entire project instead of workspace-by-workspace.(least privileges)
-          Projec-level variable sets : apply variables (like cloud credentials) to all current and future workspaces in the project automatically.
+          Project-level variable sets : apply variables (like cloud credentials) to all current and future workspaces in the project automatically.
+          Execution mode inheritance : set it at the project lvl. Workspaces inherit from their project, which inherits frm the org.
+          You can move workspaces between the projects and specify a project in the cloud block. terraform 1.6+
+          Only empty projects can be deleted.
 Workspaces : The individual unit that manages a specific set of infrastructure. Each workspace contains its own terraform configuration,
              state file, variables, and run history.
 
+Sharing variables with Variable Sets  :
+Variable sets let you reuse variables in an efficient and centralised way, so u can set variable values once and use them in multiple
+workspaces.
+Reusable collections of variables u define once and apply to many workspaces.
+Can contain both terraform variables and env variables.
+Update a value once and changes propagate to all associated workspaces automatically.
+Workspace-specific variables can override variable set values.
 
-
-
-
-
-
-
-
+Variable Precedence : HCP Terraform will always use workspace specific variables over any variables defined in variable sets applied to 
+                      the workspace.
+                     * Priority variable sets can be flagged to override more specific scopes.
+                     * CLI flags and TF_VAR_ env variables override workspace and variable set values in CLI-driven workflows.
+                     * When two variables of the same scopes conflict, HCP terraform uses alphabetical order of the set names.
 
 
 HCP Terraform teams and permissions
-
+-----------------------------------
 Access control hierarchy : 
 Users : Can belong to multiple teams
 Teams : Granted persmission at the org, project and workspace levels.
@@ -77,7 +85,7 @@ KEY TAKEAWAYS :
 
 Policy as Code : 
 --------------
-Codified rules : Securit, compliance and operational requirements written as code.
+Codified rules : Security, compliance and operational requirements written as code.
 Version controlled : Stored in VCS , reviewed through pull requests just like infra code.
 Automatically enforced  : Evaluated on every run, no manual review required.
 
