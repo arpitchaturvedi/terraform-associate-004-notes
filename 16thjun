@@ -54,6 +54,12 @@ Team tokens : Often used by automated services like CI/CD pipelines. Can run ter
 User token : Same permission level as user account, only type of token that can access multiple orgs.
 Audit tokens : provides read only access, used for accessing the audit trail API .
 
+UNDERSTANDING TERRAFORM WORKSPACES :
+CLI WORKSAPCES VS HCP TERRAFORM WORKSPACES : 
+- Same configuration, multiple state files |   - complete working environments like separate state, variable, secrets,conf files ,etc
+- Managed locally with terraform workspace  |  - terraform configuration + state file (with version history & rollback capacity) +
+                                                variables (tf variables + env variables with sensitive marking ) + run history (full audit trail of plan/apply)
+                                                 + execution settings (mode, terraform version, auto-apply ) + team access and permissions
 
 
 
