@@ -18,3 +18,48 @@ HCP Terraform adds :
   -  Cost estimation before apply
   -  Audit logs and compliance
   -  Private module registry
+
+Getting connected and authenticated with HCP terraform : 
+
+Add cloud block to HCP terraform configuration : 
+terraform {
+  cloud {
+    organization = "my-org"
+      hostname = "app.terraform.io"
+
+    workspaces {
+        project = "networking-dev"
+
+        tags {
+          name = ""
+          source = "cli"
+        }
+    }
+  
+  }
+}
+
+NOTE : backend block can't exists with this cloud block at the same time.
+
+TERRAFORM LOGIN  :
+# terraform login 
+  YES
+token : copy paste it form the browser and paste it in the terminal.
+token is saved under : /Users/username/.terraform.d/credentials.tfrc.json
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
