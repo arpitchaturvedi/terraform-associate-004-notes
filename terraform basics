@@ -1,0 +1,23 @@
+1. Which part of Terraform is responsible for managing the lifecycle of
+resources and building the dependency graph?
+ANS : terraform core
+Terraform internal architecture and component responsibilities.
+Terraform is built around a core engine and a plugin-based architecture. Terraform
+Core is responsible for interpreting configuration files, creating the resource
+dependency graph, and managing the lifecycle of resources. Providers are separate
+plugins that define resource types and communicate with external service APIs,while
+state and backends focus on tracking and storing infrastructure data rather than
+controlling execution logic.
+-----
+2. What is the primary function of a Terraform provider?
+A. Storing the state file in a secure cloud location
+B. Managing the user authentication for the Terraform Cloud website
+C. Encrypting the sensitive data stored in local variables
+D. Understanding API interactions and exposing resources for a specific service
+Purpose and function of Terraform providers :
+Providers enable Terraform to interact with specific platforms and services by
+implementing the required API calls. They define available resources and data sources
+and translate Terraform configurations into actions that external systems can
+understand. Without providers, Terraform would not be able to create or manage
+infrastructure in cloud or third-party services.
+-----
