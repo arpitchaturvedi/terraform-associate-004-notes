@@ -1,3 +1,14 @@
+Workspace workflow types : 
+1. VCS driven : triggers run based on repository configuration changes
+2. CLI driven : Triggers runs in a workspace using the terraform cli.
+3. API driven : Triggers runs using the HCP Terraform cli.best for those with custom integrations and pipelines.
+
+Execution modes in workspace settings : this is configured per workspace not on organizational level or project level.
+-Project default
+- remote : your plan & apply happens on HCP terraform infra. team can collaborate on runs within the app
+- local : plan & apply runs on local machine. HCP terraform is used to store & sync the state
+- agent : run your own lightweight agent to run terrafrm in isolated, private, on-premises infrastructure.
+
 HCP Terraform teams and permissions
 
 Access control hierarchy : 
