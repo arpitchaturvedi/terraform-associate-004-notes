@@ -9,6 +9,32 @@ Execution modes in workspace settings : this is configured per workspace not on 
 - local : plan & apply runs on local machine. HCP terraform is used to store & sync the state
 - agent : run your own lightweight agent to run terrafrm in isolated, private, on-premises infrastructure.
 
+Migrating state to HCP terraform : 
+---------------------------------
+step 1  : change providers.tf file and just add 'cloud' block in it with organization & workspace name and tags.
+step 2 : now run $terraform login then copy token from browser and paste in terminal again.
+step 3 : now run $terraform init
+step 4 : when u run terraform plan it will give error as we haven't added env variables from local machine to terraform workspace
+          as remote exection. so add env variables now
+
+Automating runs wth VCS Driven workflow : 
+step1 : git status in the terminal , git add *.tf in the current working directory.
+step2 : git commit - m "initial upload" then git push
+step3 : connect workspace > settings > version control > choose Github.com > choose org and repo > choose VCS trigger type : branch based
+        or tag-based.
+step4 : make some changes to code and repeat above steps till git push then HCP terraform automatically plan it and we have to approve it. 
+
+
+
+
+
+
+
+
+
+
+
+
 HCP Terraform teams and permissions
 
 Access control hierarchy : 
