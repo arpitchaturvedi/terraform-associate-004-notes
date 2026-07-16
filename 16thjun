@@ -47,7 +47,12 @@ TERRAFORM LOGIN  :
 token : copy paste it form the browser and paste it in the terminal.
 token is saved under : /Users/username/.terraform.d/credentials.tfrc.json
 
+API TOKEN TYPES : 
 
+Organization tokens : manage teams, memberships and workspaces
+Team tokens : Often used by automated services like CI/CD pipelines. Can run terraform operations(plan/apply)
+User token : Same permission level as user account, only type of token that can access multiple orgs.
+Audit tokens : provides read only access, used for accessing the audit trail API .
 
 
 
