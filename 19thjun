@@ -1,17 +1,33 @@
 Terraform answer explanations :
 
 
-10. A teammate asks why you chose type = map(object({...})) instead of separate string variables for a structured environment configuration. What is the most accurate explanation?
-Terraform's type system includes both primitive types (string, number, bool) and complex types, which are further divided into collection types (list, map, set) and structural types (object, tuple). Complex types allow you to define variables that hold multiple related values in a single, organized structure. Structural types like object also provide built-in validation — Terraform will check that every required attribute is present and matches the declared type during the planning phase, catching configuration errors early.
+10. A teammate asks why you chose type = map(object({...})) instead of separate string variables for a structured environment 
+    configuration. What is the most accurate explanation?
+    Terraform's type system includes both primitive types (string, number, bool) and complex types, which are further divided into 
+    collection types (list, map, set) and structural types (object, tuple). Complex types allow you to define variables that hold 
+    multiple related values in a single, organized structure. Structural types like object also provide built-in validation — 
+    Terraform will check that every required attribute is present and matches the declared type during the planning phase, catching
+    configuration errors early.
 
-11. Security has mandated that credentials must not be stored locally, should automatically expire, and must never appear in state files. Which approach meets all these requirements?
-integrate with hashicorp vault and use ephemeral resources in terraform.
+11. Security has mandated that credentials must not be stored locally, should automatically expire, and must never appear in state 
+    files. Which approach meets all these requirements?
+Ans: Integrate with hashicorp vault and use ephemeral resources in terraform.
 
-12.True or False? The immutable infrastructure pattern, where servers are replaced rather than modified in place, eliminates configuration drift because resources are never changed after initial provisioning.
-Immutable infrastructure treats servers and infrastructure as disposable resources that are never modified after deployment. Updates involve replacing the entire resource with a new version rather than patching or reconfiguring the existing one. Because resources are never changed after creation, there is no opportunity for configuration drift to accumulate over time. This pattern also simplifies rollback procedures. Terraform supports this pattern naturally through its declarative approach and resource replacement lifecycle.
+12.True or False? The immutable infrastructure pattern, where servers are replaced rather than modified in place, eliminates 
+configuration drift because resources are never changed after initial provisioning.
+  Immutable infrastructure treats servers and infrastructure as disposable resources that are never modified after deployment. 
+  Updates involve replacing the entire resource with a new version rather than patching or reconfiguring the existing one. 
+  Because resources are never changed after creation, there is no opportunity for configuration drift to accumulate over time.
+  This pattern also simplifies rollback procedures. Terraform supports this pattern naturally through its declarative approach 
+  and resource replacement lifecycle.
 
-13.Two engineers run terraform apply at the same time against the same workspace that uses an S3 backend with state locking. What are the correct outcomes? (select two)
-State locking prevents concurrent modifications that could corrupt the state file. When a backend supports locking (such as S3 with a lockfile), the first operation acquires the lock and the second operation receives an error until the lock is released. If a backend does not support locking, or if locking is explicitly disabled with -lock=false, multiple concurrent operations can write to the state file simultaneously and potentially corrupt it. Terraform never automatically merges concurrent state changes, and locking applies to all state-modifying operations including plan, apply, and destroy.
+13.Two engineers run terraform apply at the same time against the same workspace that uses an S3 backend with state locking. 
+   What are the correct outcomes? (select two)
+   State locking prevents concurrent modifications that could corrupt the state file. When a backend supports locking 
+  (such as S3 with a lockfile), the first operation acquires the lock and the second operation receives an error until the 
+  lock is released. If a backend does not support locking, or if locking is explicitly disabled with -lock=false, multiple 
+  concurrent operations can write to the state file simultaneously and potentially corrupt it. Terraform never automatically 
+  merges concurrent state changes, and locking applies to all state-modifying operations including plan, apply, and destroy.
 
 14.When applying a new configuration, you encounter an error and no logging is configured. How can you enable the most verbose level of Terraform logging to help you troubleshoot?
 Set TF_LOG env variable to TRACE
