@@ -23,7 +23,17 @@ step2 : git commit - m "initial upload" then git push
 step3 : connect workspace > settings > version control > choose Github.com > choose org and repo > choose VCS trigger type : branch based
         or tag-based.
 step4 : make some changes to code and repeat above steps till git push then HCP terraform automatically plan it and we have to approve it. 
-
+---------------------------------------------------------------------
+Organising your work with projects : 
+Organization  : Your top-level account in HCP terraform. It holds all your teams, projects, and workspaces and is where u set organization
+                wide settings.
+Project : Organizes related workspace together. Lets you scope team permissions. variable sets, and execution modes to a collection of 
+          workspaces. Every workspace must belong to exactly one project.
+          every org gets one default project, can rename it but not delete it. 
+          grant a team access to an entire project instead of workspace-by-workspace.(least privileges)
+          Projec-level variable sets : apply variables (like cloud credentials) to all current and future workspaces in the project automatically.
+Workspaces : The individual unit that manages a specific set of infrastructure. Each workspace contains its own terraform configuration,
+             state file, variables, and run history.
 
 
 
