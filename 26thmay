@@ -29,7 +29,8 @@ add env variable : export TF_VAR_num_of_pets=6
 
 TERRAFORM FILE STRUCTURE AND ORGANIZATION
 
-Create different files for different use case like variable.tf for variables storage, network.tf for n/w rsrc, dns.tf for dns, outputs.tf, firewall.tf,etc
+Create different files for different use case like variable.tf for variables storage, network.tf for n/w rsrc, dns.tf for dns, outputs.tf,
+firewall.tf,etc
 
 Terraform processes all files together
 
