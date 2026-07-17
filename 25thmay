@@ -40,8 +40,8 @@ Terraform automatically builds a dependency graph from your conf to determine th
 DEPENDENCIES : 
 Two type of dependencies : 
 Implicit dependencies(auto) : a reference to another resource that terraform already knows about.
-Explicit : Used when there's a dependencies that terraform can't automatically detect from resource references alone. Use "depends_on" for create an
-           explicit dependency.
+Explicit : Used when there's a dependencies that terraform can't automatically detect from resource references alone. Use "depends_on" 
+           for create an explicit dependency.
 PARALLEL RESOURCE OPERATION : 
 -  Terraform processes the graph with parallel execution. processes nodes as soon as their dependencies are satisfied. Non-
 dependent resources are created/modified simultaneously.
@@ -50,8 +50,8 @@ dependent resources are created/modified simultaneously.
                     When to change parallelism : if u r running into API rate limiting issue or for debugging purposes.
                     
 Terraform Apply : it make changes to your infra.
-                  Terraform apply runs a plan first to compare your exisiting infra to your desired state. By default, terr
-                  aform will prompt u to proceed with the proposed changes.
+                  Terraform apply runs a plan first to compare your exisiting infra to your desired state. By default, terraform will 
+                  prompt u to proceed with the proposed changes.
           *STATE LOCKING :   terraform locks the state file during apply to prevent concurrent modifications.
           *STATE UPDATES : State file is updated after each resource is successfully created/modified/destroyed.
           *NO AUTOMATIC ROLLBACK : If a resrc fails during apply, terraform does not rollback previous successful changes.They 
@@ -64,17 +64,20 @@ Terraform Apply : it make changes to your infra.
             $terraform apply -auto-approve
 
 Terraform destroy : destroy resources managed by terraform in the current workspace or working directory.
-  *Using the destroy command : shows destruction plan first.
-  *Removing individual resources from your config : Del resource blocks from your .tf files and then run terraform apply. Terraform detects removed resources and destroys the real-world resource.
-  *State file updates: Once a resource is destroyed, terraform removes it from the state file as well since it is no longer being managed. 
+*Using the destroy command : shows destruction plan first.
+*Removing individual resources from your config : Del resource blocks from your .tf files and then run terraform apply. Terraform detects
+   removed resources and destroys the real-world resource.
+*State file updates: Once a resource is destroyed, terraform removes it from the state file as well since it is no longer being managed. 
 
-            $terraform destroy -target=<resource_name>  Note : Also remove that resource block from config file , so terraform won't recreate it when run again.
+$terraform destroy -target=<resource_name>  Note : Also remove that resource block from config file , so terraform won't recreate
+             it when run again.
 
-Terraform validate : Terraform validate command checks your terraform configuration file for syntax errors and ensures they are structurally valid. It does not
-                     check whether the configuration will successfully deploy but ensure your code is properly written.
+Terraform validate : Terraform validate command checks your terraform configuration file for syntax errors and ensures they are structurally
+                     valid. It does not check whether the configuration will successfully deploy but ensure your code is properly written.
 
-  *Technical details of Validate : Does not communicate with providers. We must initialize terraform before validate as validate takes information about the data type or else 
-                                   from initialization. INITIALIZE > VALIDATE > PLAN > APPLY > DESTROY
+*Technical details of Validate : Does not communicate with providers. We must initialize terraform before validate as validate takes 
+                                 information about the data type or else from initialization. 
+INITIALIZE > VALIDATE > PLAN > APPLY > DESTROY
 
 
 
