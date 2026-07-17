@@ -21,3 +21,53 @@ Terraform Editions :
 1. Terraform community : command line based.
 2. HCP terraform/ terraform cloud  : SaaS platform, adiitonal features, remote state mgmt, sharing modules, policy as code,etc. 
 3. Terraform Enterprise : Self-hosted & managed, RBAC, audit logging and private networking,
+
+THE CORE TERRAFORM WORKFLOW :
+Terraform init : It prepares the environment to run other terraform commands. Downloads the required providers and modules used in the
+                 terraform configuration. 
+                 At the start of a new project or anytime u add, remove, or upgrade providers/modules
+                 or change the backend settings in your configuration.
+                 It also configures the backend for storing terraform state & creates the lock file.
+
+Terraform lock file : Every time u run terraform init, terraform creates or updates a file called .terraform.lock.hcl in ur working directory.
+                     - locks dependency versions for consistency across your env.
+
+THE .terraform directory : 
+Terraform uses the .terraform directory to store the projects providers and modules.
+the .terraform/providers directory stores cached versions of the configurations providers.
+the .terraform/modules dir contains the downloaded versions of any referenced modules.
+add this to .gitignore 
+Q. should the .terraform directory be in version control ? 
+ANS: No, add to your .gitignore file
+    Contains easily recreatable files
+    Can be large in size and contain platform specific files.
+
+Q. Can u delete the .terraform directory ?
+ANS: Technically, yes
+     Run terraform init to recreate it.
+     Useful for troubleshooting or cleaning up old dependencies.
+
+                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
