@@ -8,3 +8,16 @@ Resource Referencing : allows u to connect resources within your config , making
 create more dynamic cofig : Terraform can use properties from one resource in another and avoid hardcoding values, creating a dynamic conf.
 Terraform automatically determines the order of resource creation based on references.
 Resource identifiers :
+
+CORE COMPONENTS AND BENEFITS OF TERRAFORM : 
+
+1. Terraform core : Cli tool that provisions and manages infrastructure resources as defined in terraform config files.
+2. Providers : Extends the functionality of terraform for specific platforms, such as public cloud providers, SaaS offerings,etc
+3. Resources : Infrastructure components or services that are managed by terraform .
+4. State : How terraform maps the desired configuration with real-world resources on the target platform.
+5. Modules : Reusable and sharable blocks of code that can be called over and over again.
+
+Terraform Editions : 
+1. Terraform community : command line based.
+2. HCP terraform/ terraform cloud  : SaaS platform, adiitonal features, remote state mgmt, sharing modules, policy as code,etc. 
+3. Terraform Enterprise : Self-hosted & managed, RBAC, audit logging and private networking,
