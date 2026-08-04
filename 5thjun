@@ -22,11 +22,11 @@ terraform apply -var="region=us-west-2" -var="vm_image-xffdf"
 
 Order of precedence
 --------------------
-command line flags
-*.auto.tfvars files
-*.tfvars files
-env variables
-variable block defaults
+1. command line flags
+2. *.auto.tfvars files
+3. *.tfvars files
+4. env variables
+5. variable block defaults
 
 Output Blocks
 -------------
