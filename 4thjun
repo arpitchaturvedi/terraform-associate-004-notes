@@ -71,54 +71,61 @@ Primitive variable types:
     ----string, number and bool
 
 Complex Variable Types:
+
     ----List : A sequence of similar values. Presented by a pair of square brackets containing a comma-separated sequence of values.
               list start at 0.
-              variable "permitted_size" {
-                type = list
-                default = ["t3.small", "t4g.micro"]
+              variable "subnets" {
+                type    = list(string)
+                default = ["subnet-abc123_1", "subnet-abc123_2", "subnet-abc123_3"]
               }
- // Items are added in order
-        playlist.add("Song A");
-        playlist.add("Song B");
-        playlist.add("Song A"); // Duplicate allowed
+              Referencing :
+                Direct index: Use var.subnets[0] to extract the first element ("subnet-abc123_1").
+                Count iteration: Pass the entire list element-by-element using count and count.index:
+                  resource "aws_instance" "example" {
+                      count         = length(var.subnets)
+                    subnet_id     = var.subnets[count.index]
+                    ami           = "ami-12345678"
+                    instance_type = "t3.micro"
+                  }
 
-        // Output: [Song A, Song B, Song A] 
 
   -----MAP : A group of values identified by named labels. series of key=value pairs.
-             variable "course_details" {
-                description = "course details"
-                type = map(string)
-                default = {
-                  instructor = "bryan"      //var.course_details.instructor
-                  course   = "terraform"    //var.course_details.course
-                }
+            variable "ami_map" {
+              type = map(string)
+              default = {
+                     us-east-1 = "ami-0c55b159cbfafe1f0"
+                     us-west-2 = "ami-03d5c68bab017b49b"
+                     }
+              }
+            Referencing
+            Bracket notation: Use var.ami_map["us-east-1"] to get the string value. (Note: Dot notation like var.ami_map.us-east-1 is invalid for maps).
+            Lookup function: Use lookup(var.ami_map, "us-west-2", "ami-default") to retrieve a key safely while providing a fallback value if the key does not exist.
+            For_each iteration: Loop through key-value properties using a for_each meta-argument:
+            
+            resource "aws_instance" "example" {
+              for_each      = var.ami_map
+              ami           = each.value   # Accesses the value ("ami-xxxx")
+              availability_zone = "${each.key}a" # Accesses the key ("us-east-1")
+              instance_type = "t3.micro"
             }
-            map.put(Key, Value)
-        dictionary.put("Apple", "A round red fruit");
-        dictionary.put("Banana", "A long yellow fruit");
-        dictionary.put("Apple", "An updated definition"); // Overwrites the previous "Apple" key
 
 
   -----SET : A collection of guranteed unique values. Terraform does not support accessing elements of a set using an index because sets are unordered collections.
             note: Convert to a list to access.
-           variable "pub_subnet_ids" {
-              type = set(string)
-              default = ["subnet-12345", "subnet-7654"]
-           }
 
-Referencing a Variable :  by using a name of the variable
-  var.vpshere_dc
-  var.vpshere_networks[0] //list
+            variable "environment_tags" {
+              type    = set(string)
+              default = ["production", "staging", "development"]
+            }
+        Referencing :
+        For_each iteration: Sets are natively passed into for_each arguments to spin up infrastructure dynamically. When using a set, each.key and each.value point
+        to the exact same element:
 
-guestList.add("Alice");
-        guestList.add("Bob");
-        guestList.add("Alice"); // Duplicate ignored silently
+        resource "aws_iam_user" "users" {
+          for_each = var.environment_tags
+          name     = each.value # Will produce a user named "production", etc.
+        }
 
-        // Output: [Bob, Alice] (Order is not guaranteed)
-        System.out.println(guestList); 
-        
-        // Check if an item exists
-        System.out.println(guestList.contains("Alice")); // Output: true
 
 
 
