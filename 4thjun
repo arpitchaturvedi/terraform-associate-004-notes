@@ -77,6 +77,13 @@ Complex Variable Types:
                 type = list
                 default = ["t3.small", "t4g.micro"]
               }
+ // Items are added in order
+        playlist.add("Song A");
+        playlist.add("Song B");
+        playlist.add("Song A"); // Duplicate allowed
+
+        // Output: [Song A, Song B, Song A] 
+
   -----MAP : A group of values identified by named labels. series of key=value pairs.
              variable "course_details" {
                 description = "course details"
@@ -86,6 +93,11 @@ Complex Variable Types:
                   course   = "terraform"    //var.course_details.course
                 }
             }
+            map.put(Key, Value)
+        dictionary.put("Apple", "A round red fruit");
+        dictionary.put("Banana", "A long yellow fruit");
+        dictionary.put("Apple", "An updated definition"); // Overwrites the previous "Apple" key
+
 
   -----SET : A collection of guranteed unique values. Terraform does not support accessing elements of a set using an index because sets are unordered collections.
             note: Convert to a list to access.
@@ -97,6 +109,16 @@ Complex Variable Types:
 Referencing a Variable :  by using a name of the variable
   var.vpshere_dc
   var.vpshere_networks[0] //list
+
+guestList.add("Alice");
+        guestList.add("Bob");
+        guestList.add("Alice"); // Duplicate ignored silently
+
+        // Output: [Bob, Alice] (Order is not guaranteed)
+        System.out.println(guestList); 
+        
+        // Check if an item exists
+        System.out.println(guestList.contains("Alice")); // Output: true
 
 
 
