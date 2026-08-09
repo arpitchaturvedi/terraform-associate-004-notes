@@ -49,7 +49,7 @@ write: add new resource blocks to terraform config.
 write : add new moved blocks to terraform config.
 plan : terraform plan
 apply : terraform apply
-delete : delete moved blocks    //not needed after refactor
+delete : delete moved blocks    //moved blocks are not needed after refactor
 
 REMOVING RESOURCES WITH THE REMOVED BLOCK :
 REMOVED block instructs terraform to remove a resource from state.
