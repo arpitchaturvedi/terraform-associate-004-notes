@@ -43,8 +43,8 @@ When to use  :
 - Reading temporary credentials
 - Retrieving dynamic tokens
 
-Write-Only Arguments : lets u securely pass temporary values to terraform's managed resources during an operation without persisting
-                       those values to state or plan files.
+Write-Only Arguments : lets u securely pass temporary values to terraform's managed resources during an operation
+                      without persisting those values to state or plan files.
 resource "" "" {
   instance_class = ""
   allocated_storage = ""
