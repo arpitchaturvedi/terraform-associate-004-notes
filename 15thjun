@@ -4,9 +4,17 @@ Investigating unexpected terraform behaviour
 Preparing bug reports for hashicorp team
 Understanding what exactly terraform is doing under the hood.
 
+TRACE ( most detailed )
+DEBUG
+INFO
+WARN
+ERROR  (least detailed )
+
+
 TF_LOG Env Variable:
 Setting TF_LOG enables detailed monitoring
-export TF_LOG=TRACE
+export TF_LOG=TRACE  //linux /mac
+> $env: TF_LOG="TRACE"  //windows powershell
 $terraform plan
 
 Separate Core and provider logging:
